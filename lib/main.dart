@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'firebase_notification_handler.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -40,10 +42,18 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
+  void initState() {
+    //super.initState();
+    new FirebaseNotifications().setUpFirebase();
+  }
+
+  @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  new FirebaseNotifications().setUpFirebase();
+  ini
   int _counter = 0;
 
   void _incrementCounter() {
