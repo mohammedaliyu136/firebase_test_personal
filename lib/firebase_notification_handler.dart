@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseNotifications {
   FirebaseMessaging _firebaseMessaging;
+  final databaseReference = Firestore.instance;
 
   void setUpFirebase() {
     _firebaseMessaging = FirebaseMessaging();
@@ -16,6 +18,7 @@ class FirebaseNotifications {
 
     _firebaseMessaging.getToken().then((token) {
       print(token);
+      createRecord(token);
     });
 
     _firebaseMessaging.configure(
@@ -38,5 +41,19 @@ class FirebaseNotifications {
         .listen((IosNotificationSettings settings) {
       print("Settings registered: $settings");
     });
+  }
+
+  void createRecord(token) async {
+    await databaseReference.collection("books")
+        .document("1")
+        .setData({
+      'token': token
+    });
+
+    DocumentReference ref = await databaseReference.collection("books")
+        .add({
+      'token': token
+    });
+    print(ref.documentID);
   }
 }
