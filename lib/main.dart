@@ -52,9 +52,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  new FirebaseNotifications().setUpFirebase();
-  ini
   int _counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    new FirebaseNotifications().setUpFirebase();
+  }
 
   void _incrementCounter() {
     setState(() {
